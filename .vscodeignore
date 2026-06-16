@@ -1,0 +1,9 @@
+.vscode/**
+src/**
+**/*.ts
+**/*.map
+tsconfig.json
+.gitignore
+.github/**
+media/icon.svg
+media/render-icon.js

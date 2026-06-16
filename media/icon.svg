@@ -1,0 +1,35 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="256" y2="256" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4F46E5"/>
+      <stop offset="1" stop-color="#9333EA"/>
+    </linearGradient>
+    <clipPath id="frameClip">
+      <rect x="53" y="61" width="144" height="118" rx="14"/>
+    </clipPath>
+  </defs>
+
+  <!-- rounded tile -->
+  <rect x="0" y="0" width="256" height="256" rx="60" fill="url(#bg)"/>
+
+  <!-- photo frame -->
+  <rect x="46" y="54" width="164" height="132" rx="22" fill="none" stroke="#ffffff" stroke-width="14"/>
+
+  <!-- scene inside the frame: sun + mountains -->
+  <g clip-path="url(#frameClip)">
+    <circle cx="90" cy="96" r="15" fill="#ffffff"/>
+    <path d="M53 179 L95 120 L128 152 L156 104 L197 179 Z" fill="#ffffff"/>
+  </g>
+
+  <!-- convert badge (bg-coloured ring punches through the frame, then amber disc) -->
+  <circle cx="196" cy="196" r="52" fill="url(#bg)"/>
+  <circle cx="196" cy="196" r="44" fill="#FBBF24"/>
+
+  <!-- exchange arrows -->
+  <g stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M174 184 H214"/>
+    <path d="M206 176 L216 184 L206 192"/>
+    <path d="M218 208 H178"/>
+    <path d="M186 200 L176 208 L186 216"/>
+  </g>
+</svg>

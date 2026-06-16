@@ -1,0 +1,168 @@
+{
+  "name": "vscode-image-converter",
+  "displayName": "Image Converter",
+  "description": "Convert and resize images (JPEG, PNG, AVIF, WebP) straight from the Explorer — like a Finder folder action, but in VS Code.",
+  "version": "0.0.1",
+  "publisher": "slhck",
+  "license": "MIT",
+  "icon": "media/icon.png",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "imageConverter.convert",
+        "title": "Convert Image(s)…",
+        "category": "Image Converter"
+      },
+      {
+        "command": "imageConverter.convertWithDefaults",
+        "title": "Convert Image(s) with Defaults",
+        "category": "Image Converter"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "imageConverter.convert",
+          "group": "7_modification@10",
+          "when": "resourceExtname =~ /\\.(png|jpe?g|webp|avif|gif|tiff?|bmp|heic|heif|svg)$/i"
+        },
+        {
+          "command": "imageConverter.convertWithDefaults",
+          "group": "7_modification@11",
+          "when": "resourceExtname =~ /\\.(png|jpe?g|webp|avif|gif|tiff?|bmp|heic|heif|svg)$/i"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "imageConverter.convert",
+          "when": "false"
+        },
+        {
+          "command": "imageConverter.convertWithDefaults",
+          "when": "false"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Image Converter",
+      "properties": {
+        "imageConverter.defaultFormat": {
+          "type": "string",
+          "enum": ["avif", "jpeg", "png", "webp", "keep"],
+          "enumDescriptions": [
+            "AVIF — best compression, modern",
+            "JPEG — universal, lossy",
+            "PNG — lossless",
+            "WebP — good compression",
+            "Keep the source format (resize / re-encode only)"
+          ],
+          "default": "avif",
+          "description": "Preselected output format in the prompt, and the format used by \"Convert with Defaults\"."
+        },
+        "imageConverter.defaultResizeMode": {
+          "type": "string",
+          "enum": ["none", "scale", "maxWidth", "maxHeight", "longestSide"],
+          "enumDescriptions": [
+            "Do not resize",
+            "Scale by a factor (e.g. 0.5)",
+            "Limit the width in pixels",
+            "Limit the height in pixels",
+            "Limit the longest side in pixels"
+          ],
+          "default": "none",
+          "description": "Preselected resize mode in the prompt, and the mode used by \"Convert with Defaults\"."
+        },
+        "imageConverter.scaleFactor": {
+          "type": "number",
+          "default": 0.5,
+          "minimum": 0.01,
+          "description": "Default scale factor when resizing by factor (0.5 = half size, 2 = double)."
+        },
+        "imageConverter.maxDimension": {
+          "type": "number",
+          "default": 1920,
+          "minimum": 1,
+          "description": "Default pixel limit for the max width / max height / longest side resize modes."
+        },
+        "imageConverter.jpegQuality": {
+          "type": "number",
+          "default": 80,
+          "minimum": 1,
+          "maximum": 100,
+          "description": "JPEG quality (1–100, higher = better quality and larger file)."
+        },
+        "imageConverter.avifQuality": {
+          "type": "number",
+          "default": 50,
+          "minimum": 1,
+          "maximum": 100,
+          "description": "AVIF quality (1–100). AVIF stays small even at lower values."
+        },
+        "imageConverter.webpQuality": {
+          "type": "number",
+          "default": 80,
+          "minimum": 1,
+          "maximum": 100,
+          "description": "WebP quality (1–100)."
+        },
+        "imageConverter.pngCompressionLevel": {
+          "type": "number",
+          "default": 9,
+          "minimum": 0,
+          "maximum": 9,
+          "description": "PNG zlib compression effort (0 = fastest, 9 = smallest). PNG is always lossless."
+        },
+        "imageConverter.effort": {
+          "type": "number",
+          "default": 4,
+          "minimum": 0,
+          "maximum": 9,
+          "description": "Encoder CPU effort for AVIF/WebP (higher = slower but smaller files)."
+        },
+        "imageConverter.noUpscale": {
+          "type": "boolean",
+          "default": true,
+          "description": "When using a max width/height/longest-side limit, never enlarge images smaller than the limit."
+        },
+        "imageConverter.outputBehavior": {
+          "type": "string",
+          "enum": ["alongside", "replace", "subfolder"],
+          "enumDescriptions": [
+            "Write a new file next to the original",
+            "Replace the original file (deletes the source)",
+            "Write into a \"converted\" subfolder"
+          ],
+          "default": "alongside",
+          "description": "Where converted files are written."
+        },
+        "imageConverter.overwriteExisting": {
+          "type": "boolean",
+          "default": false,
+          "description": "When writing alongside or into a subfolder, overwrite an existing target instead of adding a -1, -2… suffix. The original source file is never overwritten."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "render-icon": "node media/render-icon.js",
+    "package": "npx --yes @vscode/vsce package"
+  },
+  "dependencies": {
+    "sharp": "^0.35.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/vscode": "^1.96.0",
+    "typescript": "^6.0.0"
+  }
+}
