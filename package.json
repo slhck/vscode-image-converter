@@ -1,10 +1,18 @@
 {
   "name": "vscode-image-converter",
-  "displayName": "Image Converter",
+  "displayName": "Explorer Image Converter",
   "description": "Convert and resize images (JPEG, PNG, AVIF, WebP) straight from the Explorer — like a Finder folder action, but in VS Code.",
   "version": "0.0.1",
   "publisher": "slhck",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/slhck/vscode-image-converter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/slhck/vscode-image-converter/issues"
+  },
+  "homepage": "https://github.com/slhck/vscode-image-converter#readme",
   "icon": "media/icon.png",
   "engines": {
     "vscode": "^1.96.0"
@@ -155,7 +163,11 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "render-icon": "node media/render-icon.js",
-    "package": "npx --yes @vscode/vsce package"
+    "package": "npx --yes @vscode/vsce package",
+    "publish": "npx --yes @vscode/vsce publish",
+    "release:patch": "npm version patch && git push --follow-tags",
+    "release:minor": "npm version minor && git push --follow-tags",
+    "release:major": "npm version major && git push --follow-tags"
   },
   "dependencies": {
     "sharp": "^0.35.1"
