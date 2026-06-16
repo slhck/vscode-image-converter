@@ -2,7 +2,7 @@
   "name": "vscode-image-converter",
   "displayName": "Explorer Image Converter",
   "description": "Convert and resize images (JPEG, PNG, AVIF, WebP) straight from the Explorer — like a Finder folder action, but in VS Code.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "slhck",
   "license": "MIT",
   "repository": {
@@ -63,7 +63,13 @@
       "properties": {
         "imageConverter.defaultFormat": {
           "type": "string",
-          "enum": ["avif", "jpeg", "png", "webp", "keep"],
+          "enum": [
+            "avif",
+            "jpeg",
+            "png",
+            "webp",
+            "keep"
+          ],
           "enumDescriptions": [
             "AVIF — best compression, modern",
             "JPEG — universal, lossy",
@@ -76,7 +82,13 @@
         },
         "imageConverter.defaultResizeMode": {
           "type": "string",
-          "enum": ["none", "scale", "maxWidth", "maxHeight", "longestSide"],
+          "enum": [
+            "none",
+            "scale",
+            "maxWidth",
+            "maxHeight",
+            "longestSide"
+          ],
           "enumDescriptions": [
             "Do not resize",
             "Scale by a factor (e.g. 0.5)",
@@ -141,7 +153,11 @@
         },
         "imageConverter.outputBehavior": {
           "type": "string",
-          "enum": ["alongside", "replace", "subfolder"],
+          "enum": [
+            "alongside",
+            "replace",
+            "subfolder"
+          ],
           "enumDescriptions": [
             "Write a new file next to the original",
             "Replace the original file (deletes the source)",
