@@ -37,25 +37,9 @@ All settings live under "Image Converter" in VS Code settings (prefix `imageConv
 - `outputBehavior` — `alongside`, `replace`, or `subfolder`.
 - `overwriteExisting` — overwrite an existing target instead of adding a `-1`, `-2`… suffix. The source file is never overwritten.
 
-## Developing
+## Contributing
 
-```bash
-npm install        # installs deps, including sharp's prebuilt binary
-npm run compile    # type-check and build into out/
-```
-
-Press `F5` in VS Code to launch an Extension Development Host with the extension loaded, then try it on some images.
-
-## Installing it permanently
-
-Package a `.vsix` and install it into your normal VS Code:
-
-```bash
-npx @vscode/vsce package          # produces vscode-image-converter-0.0.1.vsix
-code --install-extension vscode-image-converter-0.0.1.vsix
-```
-
-Because `sharp` ships a native binary, the packaged extension targets the platform you build it on (here: macOS arm64). Rebuild on another platform if you move it.
+Build, run, and packaging instructions live in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Acknowledgements
 
