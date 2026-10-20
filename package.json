@@ -179,14 +179,14 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "render-icon": "node media/render-icon.js",
-    "package": "npx --yes @vscode/vsce package",
-    "publish": "npx --yes @vscode/vsce publish",
+    "package": "node scripts/package-targets.mjs",
+    "publish": "node scripts/package-targets.mjs --publish",
     "release:patch": "npm version patch && git push --follow-tags",
     "release:minor": "npm version minor && git push --follow-tags",
     "release:major": "npm version major && git push --follow-tags"
   },
   "dependencies": {
-    "sharp": "^0.35.1"
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
