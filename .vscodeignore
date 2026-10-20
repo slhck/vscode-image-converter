@@ -7,3 +7,5 @@ tsconfig.json
 .github/**
 media/icon.svg
 media/render-icon.js
+scripts/**
+dist/**

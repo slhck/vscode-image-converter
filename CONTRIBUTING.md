@@ -13,14 +13,20 @@ Press `F5` in VS Code to launch an Extension Development Host with the extension
 
 ## Packaging and local install
 
-Package a `.vsix` and install it into your normal VS Code:
+`sharp` ships a native binary per platform, so the extension is published as one `.vsix` per VS Code target. Package all targets into `dist/`, or only some of them:
 
 ```bash
-npx @vscode/vsce package          # produces vscode-image-converter-0.0.1.vsix
-code --install-extension vscode-image-converter-0.0.1.vsix
+npm run package                                # all targets
+node scripts/package-targets.mjs linux-x64     # only the given targets
 ```
 
-Because `sharp` ships a native binary, the packaged extension targets the platform you build it on (here: macOS arm64). Rebuild on another platform if you move it.
+For each target, the script reinstalls the dependencies with that platform's `sharp` binary (`npm ci --os --cpu --libc`) and runs `vsce package --target`. Afterwards it reinstalls the dependencies for your own machine.
+
+Install the package for your platform into your normal VS Code:
+
+```bash
+code --install-extension dist/vscode-image-converter-darwin-arm64-<version>.vsix
+```
 
 ## Releasing
 
@@ -37,13 +43,13 @@ Each script runs `npm version`, which updates `package.json`, creates a commit a
 To publish to the Marketplace afterwards, run:
 
 ```bash
-npm run publish          # wraps "vsce publish"
+npm run publish          # packages every target, then "vsce publish --packagePath"
 ```
 
-This needs a one-time login with a Personal Access Token from Azure DevOps:
+Do not run a plain `vsce publish`. It uploads a single package with only the `sharp` binary of the machine you built it on, and on every other platform the extension fails to start ("command 'imageConverter.convert' not found").
+
+Publishing needs a one-time login with a Personal Access Token from Azure DevOps:
 
 ```bash
 npx @vscode/vsce login slhck
 ```
-
-A note on `sharp`: because the native binary is platform-specific, a plain `vsce publish` uploads a build that only works on the machine you built it on. To support every platform, publish one package per target with `vsce package --target <platform>` (e.g. `darwin-arm64`, `darwin-x64`, `win32-x64`, `linux-x64`, `linux-arm64`), each built with the matching `sharp` binary installed. This is usually wired up in CI rather than done by hand.
